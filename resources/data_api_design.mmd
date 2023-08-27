@@ -1,0 +1,34 @@
+classDiagram
+    class User{
+        +username: str
+        +email: str
+        +password: str
+        +create_task(task: Task) -> None
+        +update_task(task: Task) -> None
+        +delete_task(task: Task) -> None
+        +get_tasks() -> List[Task]
+    }
+    class Task{
+        +title: str
+        +description: str
+        +start_time: datetime
+        +end_time: datetime
+        +assignee: User
+        +get_duration() -> timedelta
+    }
+    class Calendar{
+        +get_available_slots(date: date) -> List[datetime]
+        +get_assigned_tasks(date: date) -> List[Task]
+    }
+    class Notification{
+        +send_notification(user: User, message: str) -> None
+    }
+    class Report{
+        +generate_report(tasks: List[Task]) -> str
+    }
+    User "1" -- "n" Task: has
+    User "1" -- "1" Calendar: has
+    User "1" -- "1" Notification: has
+    Task "1" -- "1" User: assigned_to
+    Calendar "1" -- "1" User: owner
+    Report "1" -- "n" Task: includes
